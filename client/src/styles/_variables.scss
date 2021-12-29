@@ -1,0 +1,147 @@
+$mainFontFamily: "Roboto", sans-serif;
+
+// xs          0 -  599 / p: 8|0 / 1col     - 599 / 1col     - 599
+// sm        600 -  959 / p: 8   / 3col 184 - 303 / 2col 276 - 455
+// md        960 - 1279 / p: 12  / 4col 216 - 295 / 3col 296 - 402 / img 225*400
+// lg=gt-md 1280 - 1919 / p: 12  / 6col 189 - 295 / 5col 232 - 360
+// xl       1920 - 5000
+// lt-sm         -  599
+// lt-md         -  959
+// lt-lg         - 1279
+// lt-xl         - 1919
+// gt-xs     600 -
+// gt-sm     960 -
+// gt-md    1280 -
+// gt-xl    1920 -
+
+// notebook 1536x864 and 1304x697
+// x500 393x619 699x313 // 980x1544 981x439
+//  k50 360x560 640x280 // 980x1525 980x429
+$screen-xs-min: 0px;
+$screen-sm-min: 600px;
+$screen-md-min: 960px;
+$screen-lg-min: 1280px;
+$screen-xl-min: 1920px;
+
+$space-gt-md: 1rem;
+$space-md: 1rem;
+$space-sm: 0.5rem;
+$space-xs: 0.5rem;
+
+$header-height-gt-md: 5rem;
+$header-height-md: 5rem;
+$header-height-sm: 4rem;
+$header-height-xs: 3rem;
+
+// $teal: (
+//   "regular": #26a69a,
+//   "light": #64d8cb,
+//   "dark": #00766c,
+// );
+
+// $bluegray: (
+//   "regular": #607d8b,
+//   "light": #8eacbb,
+//   "dark": #34515e,
+// );
+
+// $red: (
+//   "regular": #e64a19,
+//   "light": #ff7d47,
+//   "dark": #ac0800,
+// );
+
+// $grey: (
+//   "regular": #fdfdfd,
+//   "light": #fff,
+//   "dark": #e0e0e0,
+// );
+
+$teal: #26a69a;
+$bluegray: #607d8b;
+$red: #e64a19;
+$grey: #fdfdfd;
+
+// assign custom colors with main theme prefixes
+@function theme($primary, $secondary, $danger, $background) {
+  @return (
+    "primary": $primary,
+    "secondary": $secondary,
+    "danger": $danger,
+    "background": $background,
+  );
+}
+
+// generate map with each color shades
+// color, color-light, color-dark
+@function getColors($theme) {
+  $newMap: ();
+  @each $name, $value in $theme {
+    $newMap: map-merge(
+      $newMap,
+      (#{$name}: $value, #{$name}-light: lighten($value, 10%), #{$name}-dark: darken($value, 10%))
+    );
+  }
+  @return $newMap;
+}
+
+// generate dark or light text color
+// depending on background color
+@function text($color) {
+  @if (lightness($color) > 49) {
+    @return rgb(50, 50, 50);
+  } @else {
+    @return rgb(247, 247, 247);
+  }
+}
+
+// generate theme
+$basicThemeColors: theme($teal, $bluegray, $red, $grey);
+// append additional colors
+$additionalColors: (
+  "route-main": #66b6d2,
+  "route-local": #f2d3ad,
+  "red": red,
+  "green": green,
+   "blue": blue,
+   "black": black,
+   "yellow": yellow,
+);
+// combine theme COLORS with additional colors
+$theme: map-merge(
+  $map1: $basicThemeColors,
+  $map2: $additionalColors,
+);
+// generate SHADES for all colors and
+// append basic text color based on background color
+$colors: map-merge(
+  $map1: getColors($theme),
+  $map2: (
+    "text": text(map-get($basicThemeColors, "background")),
+  ),
+);
+
+// generate variables for quick styling
+// alternative: map-get($colors, "primary") for each color in $colors
+$primary: map-get($colors, "primary");
+$primary-light: map-get($colors, "primary-light");
+$primary-dark: map-get($colors, "primary-dark");
+
+$secondary: map-get($colors, "secondary");
+$secondary-light: map-get($colors, "secondary-light");
+$secondary-dark: map-get($colors, "secondary-dark");
+
+$danger: map-get($colors, "danger");
+$danger-light: map-get($colors, "danger-light");
+$danger-dark: map-get($colors, "danger-dark");
+
+$background: map-get($colors, "background");
+$background-light: map-get($colors, "background-light");
+$background-dark: map-get($colors, "background-dark");
+
+$text: map-get($colors, "text");
+
+// $color-route-main: map-get($colors, "route-main");
+// $color-route-main-light: map-get($colors, "route-main-light");
+// $color-route-main-dark: map-get($colors, "route-main-dark");
+// $color-route-local: map-get($colors, "route-local");
