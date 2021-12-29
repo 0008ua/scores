@@ -7,8 +7,8 @@ import storeRouter from './store.routes';
 
 const router = express.Router();
 
-router.use('/', express.static(path.join(__dirname, '..', '..', '..', 'client', 'build'), { redirect: false }));
-router.use('*', (req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '..', '..', '..', 'client', 'build', 'index.html')));
+router.use('/', express.static(path.join(__dirname, '..', '..', 'client', 'build'), { redirect: false }));
+router.use('*', (req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '..', '..', 'client', 'build', 'index.html')));
 
 export {
   router,
