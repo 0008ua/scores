@@ -5,11 +5,8 @@ const Btn = ({ children, color, customType, ...props }) => {
     // add main isolated class
     let classStr = classes.btn;
     if (color) {
-        console.log('color', color)
         // add styling isolated class
         classStr = `${classStr} ${classes['btn_' + color]}`
-        console.log('classStr', classStr)
-
     }
     if (customType) {
         // add styling isolated class

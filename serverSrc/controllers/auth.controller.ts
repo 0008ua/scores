@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const signup = (req: Request, res: Response, next: NextFunction) => {
   const user: IUser = req.body;
-
   if (user && user.name && user.password) {
     // singnup new user
     user.role = 'member';

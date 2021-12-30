@@ -25,6 +25,8 @@ app.set('port', port);
  * Create HTTP or HTTPS server.
  */
 let server: http.Server | https.Server;
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('port', port);
 if (process.env.NODE_ENV === 'development') {
   const httpsOptions = {
     key: fs.readFileSync(path.join(__dirname, '..', '..', 'security', 'cert.key')),

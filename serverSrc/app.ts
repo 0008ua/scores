@@ -31,7 +31,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// console.log('zzzz')
+
 // run().catch(err => console.log(err));
 
 /**

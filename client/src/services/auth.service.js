@@ -6,6 +6,7 @@ export default class AuthService {
   signin(user) {
     // localStorage.removeItem('persistStorage');
     // console.log('local signin', localStorage.getItem('persistStorage'))
+    console.log('user', user)
     return this.httpService.post('/api/auth/signin', {body: user});
   }
 

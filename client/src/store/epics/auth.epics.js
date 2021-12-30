@@ -1,5 +1,5 @@
 import { ofType } from 'redux-observable';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import {
   authError, storeToken, storeTokenSuccess, storeUserFromToken, storeUserFromTokenSuccess,
@@ -8,13 +8,14 @@ import {
 import { authService, helpersService } from '../../services/container';
 import { storeDataActions } from '../entities/store-data-config';
 
-const recentGamerActions = storeDataActions['recentGamer'];
+const recentPlayerActions = storeDataActions['recentPlayer'];
 
 const signinEpic = (action$) => action$.pipe(
   ofType(SIGNIN),
   map((action) => action.payload),
   switchMap((user) => authService.signin(user).pipe(
-    switchMap((token) => [storeToken(token), recentGamerActions.removeAll()]),
+    tap((x) => console.log('token', x)),
+    switchMap((token) => [storeToken(token), recentPlayerActions.removeAll()]),
     catchError((err) => [authError(err)])
   )),
 );
@@ -23,7 +24,7 @@ const signupEpic = (action$) => action$.pipe(
   ofType(SIGNUP, LOGOUT),
   map((action) => action.payload),
   switchMap((user) => authService.signup(user).pipe(
-    switchMap((token) => [storeToken(token), recentGamerActions.removeAll()]),
+    switchMap((token) => [storeToken(token), recentPlayerActions.removeAll()]),
     catchError((err) => [authError(err)])
   )),
 );
