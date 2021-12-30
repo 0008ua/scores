@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { IGame, IGameModel } from '../interfaces';
 
 const ScoreScheema = new Schema({
-  gamer_id: {
+  _id: { // gamer _id
     type: String,
     required: true,
   },
@@ -14,11 +14,11 @@ const ScoreScheema = new Schema({
 });
 
 const RoundScheema = new Schema({
-  roundName: {
+  _id: { // name
     type: String,
     required: true,
   },
-  scores: [ScoreScheema],
+  players: [ScoreScheema],
 });
 
 
@@ -32,7 +32,7 @@ const GameSchema = new Schema<IGame, IGameModel>({
     required: true,
   },
   rounds: [RoundScheema],
-  finaly: ScoreScheema,
+  // finaly: ScoreScheema,
 },
 {
   timestamps: true, // will add: a createdAt and a updatedAt date value.

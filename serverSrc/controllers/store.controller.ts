@@ -40,10 +40,8 @@ const add = (req: Request, res: Response, next: NextFunction) => {
   case 'game': {
     const game = entity;
     game.owner = user._id;
-    // game.type = entityName;
     GameModel.createGame(game)
       .then((game) => {
-        console.log('created game', game);
         return res.status(200).json(game);
       })
       .catch((err) => next(err));

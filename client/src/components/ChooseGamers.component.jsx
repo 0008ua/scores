@@ -124,21 +124,21 @@ export default function ChooseGamersComponent() {
     console.log('clientGame', clientGame);
 
 
-    const game = {
-      _id: uuidv4(),
-      type: 'train',
-      clientPlayers,
-      rounds: {
-        start: scores,
-        routes: scores,
-        length: scores,
-      }
+    // const game = {
+    //   _id: uuidv4(),
+    //   type: 'train',
+    //   clientPlayers,
+    //   rounds: {
+    //     start: scores,
+    //     routes: scores,
+    //     length: scores,
+    //   }
 
-    };
+    // };
 
     // dispatch(gameActions.removeAll());
     // dispatch(gameActions.addOne(game));
-    dispatch(gameActions.setAll([game]));
+    // dispatch(gameActions.setAll([game]));
     // dispatch(clientGameActions.removeAll());
     // dispatch(clientGameActions.addOne(clientGame));
     dispatch(clientGameActions.setAll([clientGame]));

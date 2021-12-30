@@ -30,41 +30,61 @@ export default function TrainComponent() {
   }, [navigate, round, availablePaths])
 
 
+  const clientGameActions = storeDataActions['clientGame'];
   const gameActions = storeDataActions['game'];
-  const gameSelectors = storeDataSelectors['game'];
+  const clientGameSelectors = storeDataSelectors['clientGame'];
+  const clientRoundSelectors = storeDataSelectors['clientRound'];
 
-  const games = useSelector(gameSelectors.selectAll).filter((game) => game.type === 'train');
+  const clientGames = useSelector(clientGameSelectors.selectAll).filter((game) => game.type === 'train');
+  const clientRounds = useSelector(clientRoundSelectors.selectAll);
 
   const routes = [
     {
       path: 'start',
       element: <RouteGuard redirect={'../' + availablePaths[1]}
-        canActivate={games && !games.length}>
+        canActivate={clientGames && !clientGames.length}>
         < ChooseGamersComponent />
       </RouteGuard>,
       exact: 'true'
     },
     {
       path: ':round',
-      element: <RouteGuard redirect="../start" canActivate={games && games.length}>
+      element: <RouteGuard redirect="../start" canActivate={clientGames && clientGames.length}>
         < TrainRoundsComponent />
       </RouteGuard>,
       exact: 'true'
     },
     {
       index: true,
-      element: <RouteGuard redirect="../start" canActivate={games && games.length}>
+      element: <RouteGuard redirect="../start" canActivate={clientGames && clientGames.length}>
         < TrainRoundsComponent />
       </RouteGuard>,
       exact: 'true'
     },
   ];
 
-  const endGameHandler = () => {
-    // if game finished save to db
+  const endGameHandler = (finish) => {
+    const clientRoundsWithTotal = clientRounds.map((round) => {
+      const players = round.players.map((player) => {
+        return {
+          _id: player._id,
+          score: player.scoresLine.reduce((prev, cur) => prev + cur, 0)
+        }
+      });
+      return {...round, players}
+    })
+    const game = {
+      type: clientGames[0].type,
+      rounds: clientRoundsWithTotal,
+    }
 
+    console.log('game', game);
+    // if game finished save to db
+    if (finish) {
+      dispatch(gameActions.add(game));
+    }
     // clear game from storage
-    dispatch(gameActions.removeAll());
+    dispatch(clientGameActions.removeAll());
   }
 
   return (
@@ -83,10 +103,15 @@ export default function TrainComponent() {
         <div className="game-content__header game-content-header">
           <h1 className="game-content-header__title heading-text">Train</h1>
           <div className="game-content-header__btn">
-            {games && games.length > 0 && <Btn
-              color="danger" type="button" onClick={() => endGameHandler()}>
-              Finish game
-            </Btn>}
+            {clientGames && clientGames.length > 0 &&
+              <Btn
+                color="danger" type="button" onClick={() => endGameHandler(false)}>
+                Cancel game
+              </Btn> &&
+              <Btn
+                color="danger" type="button" onClick={() => endGameHandler(true)}>
+                Finish game
+              </Btn>}
           </div>
 
         </div>

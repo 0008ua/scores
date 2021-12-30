@@ -14,7 +14,6 @@ const signinEpic = (action$) => action$.pipe(
   ofType(SIGNIN),
   map((action) => action.payload),
   switchMap((user) => authService.signin(user).pipe(
-    tap((x) => console.log('token', x)),
     switchMap((token) => [storeToken(token), recentPlayerActions.removeAll()]),
     catchError((err) => [authError(err)])
   )),
