@@ -426,26 +426,33 @@
 
 .game-content {
     &__header {
-        display: flex;
     }
-    &__summary {
-    }
-
-    &__round {
+     &__round {
     }
 }
 
 .game-content-header {
+        display: flex;
+flex-flow: row wrap;
     &__title {
+        flex: 1 1 100%;
     }
     &__btn {
+        flex: 1 1 100%;
+
         display: flex;
         align-items: center;
+        justify-content: space-around;
         margin-bottom: 1rem;
+
         // button {
         //     display: inline-block;
         //     // white-space: nowrap;
         // }
+    }
+    &__summary {
+        flex: 1 1 100%;
+
     }
 }
 
@@ -550,9 +557,10 @@
 
 .dbl-icon-btn {
     &__text {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-left: 0.25rem;
     }
     &__icon {
+        padding-right: 0.25rem;
+
     }
 }

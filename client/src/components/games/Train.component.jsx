@@ -34,7 +34,9 @@ export default function TrainComponent() {
   const gameActions = storeDataActions['game'];
   const clientGameSelectors = storeDataSelectors['clientGame'];
   const clientRoundSelectors = storeDataSelectors['clientRound'];
+  const clientPlayerSelectors = storeDataSelectors['clientPlayer'];
 
+  const clientPlayers = useSelector(clientPlayerSelectors.selectAll);
   const clientGames = useSelector(clientGameSelectors.selectAll).filter((game) => game.type === 'train');
   const clientRounds = useSelector(clientRoundSelectors.selectAll);
 
@@ -63,22 +65,37 @@ export default function TrainComponent() {
     },
   ];
 
+  const calcTotalScores = (player_id) => {
+    let sum = 0;
+    console.log('clientRounds', clientRounds)
+    clientRounds.forEach((round) => {
+      console.log('round', round)
+
+      round.players.forEach((player) => {
+        if (player._id === player_id) {
+          sum += player.scoresLine.reduce((prev, cur) => prev + cur, 0)
+        }
+      })
+    })
+    return sum;
+  }
+  const getPlayerColor = (player_id) => clientPlayers.find((player) => player._id === player_id).color;
+  const getPlayerName = (player_id) => clientPlayers.find((player) => player._id === player_id).name;
+
   const endGameHandler = (finish) => {
     const clientRoundsWithTotal = clientRounds.map((round) => {
-      const players = round.players.map((player) => {
-        return {
-          _id: player._id,
-          score: player.scoresLine.reduce((prev, cur) => prev + cur, 0)
-        }
-      });
-      return {...round, players}
-    })
+    const players = round.players.map((player) => {
+      return {
+        _id: player._id,
+        score: player.scoresLine.reduce((prev, cur) => prev + cur, 0)
+      }
+    });
+    return { ...round, players }
+  })
     const game = {
       type: clientGames[0].type,
       rounds: clientRoundsWithTotal,
     }
-
-    console.log('game', game);
     // if game finished save to db
     if (finish) {
       dispatch(gameActions.add(game));
@@ -99,7 +116,7 @@ export default function TrainComponent() {
         </Routes>
       </div>
 
-      <div className="game__content game-content container">
+      <div className="game__content container">
         <div className="game-content__header game-content-header">
           <h1 className="game-content-header__title heading-text">Train</h1>
           <div className="game-content-header__btn">
@@ -107,13 +124,21 @@ export default function TrainComponent() {
               <Btn
                 color="danger" type="button" onClick={() => endGameHandler(false)}>
                 Cancel game
-              </Btn> &&
+              </Btn>}
+            {clientGames && clientGames.length > 0 &&
               <Btn
                 color="danger" type="button" onClick={() => endGameHandler(true)}>
                 Finish game
               </Btn>}
           </div>
+          <div className="game-content-header__summary">
 
+            {clientPlayers && clientPlayers.map((player) => {
+              return <div style={{ color: getPlayerColor((player._id))}}>
+                {getPlayerName(player._id)} {calcTotalScores(player._id)}
+              </div>
+              })}
+          </div>
         </div>
         {/* <div className="game-content__summary">
           summary

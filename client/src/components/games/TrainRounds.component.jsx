@@ -201,25 +201,25 @@ export default function TrainRoundsComponent() {
 
             {clientRound._id === 'cars' && <div className='round-item__gameplay gameplay' >
               <div className="gameplay__visualization gameplay__visualization_cars">
-                {[8, 6, 4, 3, 2, 1].map((score) =>
+                {cars.map((car) =>
                   <div className="car" key={uuidv4()}>
                     <Btn color={getPlayerColor(player._id)}
-                      customType="sticky-left"
-                      onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>
-                      <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faPlus} />
+                      customType={['sticky-left', 'narrow']}
+                      onClick={() => scoresLineAddHandler({ score: car.score, player_id: player._id })}>
+                      <FontAwesomeIcon icon={faPlus} />
                     </Btn>
                     <Btn color={getPlayerColor(player._id)}
-                      customType="sticky">
-                      <span className="dbl-icon-btn__text">{score}</span>
+                      customType={['sticky', 'narrow']}>
+                      <FontAwesomeIcon className="dbl-icon-btn__icon" icon={faSubway} />
 
-                      <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faSubway} />
+                      <span className="dbl-icon-btn__text">{car.qty}</span>
                     </Btn>
                     <Btn color={getPlayerColor(player._id)}
-                      customType="sticky-right"
-                      onClick={() => scoresLineRemoveHandler({ score, player_id: player._id })}>
-                      <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faMinus} />
+                      customType={['sticky-right', 'narrow']}
+                      onClick={() => scoresLineRemoveHandler({ score: car.score, player_id: player._id })}>
+                      <FontAwesomeIcon icon={faMinus} />
                     </Btn>
-                    <span className='dbl-icon-btn__text'>{calcQtyOfArrItems(player._id, score)}</span>
+                    <span className='dbl-icon-btn__text'>{calcQtyOfArrItems(player._id, car.score)}</span>
                   </div>
 
 

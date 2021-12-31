@@ -10,7 +10,13 @@ const Btn = ({ children, color, customType, ...props }) => {
     }
     if (customType) {
         // add styling isolated class
-        classStr = `${classStr} ${classes['btn_' + customType]}`
+        if (Array.isArray(customType)) {
+            customType.forEach((type) => {
+                classStr = `${classStr} ${classes['btn_' + type]}`
+            })
+        } else {
+            classStr = `${classStr} ${classes['btn_' + customType]}`
+        }
     }
     if (props.className) {
         // add inherited (passed from outside) class
