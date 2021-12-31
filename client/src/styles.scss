@@ -377,10 +377,51 @@
     display: flex;
     flex-flow: row nowrap;
     &__rounds-menu {
-        flex: 0 0 3rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 3rem;
+        // flex: 0 0 3rem;
+        @include gt-md {
+            height: calc(100vh - #{$header-height-gt-md} + #{$header-height-gt-md});
+        }
+        @include md {
+            height: calc(100vh - #{$header-height-md} + #{$header-height-md});
+        }
+        @include sm {
+            height: calc(100vh - #{$header-height-sm} + #{$header-height-sm});
+        }
+        @include xs {
+            height: calc(100vh - #{$header-height-xs} + #{$header-height-xs});
+        }
+    }
+    &__rounds-menu-top {
+        // position: fixed;
+        // top: 0;
+        // left: 0;
+        background-color: $primary;
+        width: 3rem;
+        background-color: $background-dark;
+        border-left: 0.5rem solid $background-dark;
+        pointer-events: none;
+        cursor: default;
+        @include xs {
+            height: $header-height-xs;
+        }
+        @include sm {
+            height: $header-height-sm;
+        }
+        @include md {
+            height: $header-height-md;
+        }
+        @include gt-md {
+            height: $header-height-gt-md;
+        }
     }
     &__content {
-        flex: 1 1 auto;
+        margin-left: 3rem;
+        width: 100%;
+        // flex: 1 1 auto;
     }
 }
 
@@ -417,8 +458,8 @@
             border-left: 0.5rem solid $secondary-light;
         }
         &_upcomming {
-            background-color: $secondary;
-            border-left: 0.5rem solid $secondary;
+            background-color: $secondary-dark;
+            border-left: 0.5rem solid $secondary-dark;
             // border-top: .25rem solid $secondary;
         }
     }
@@ -427,13 +468,13 @@
 .game-content {
     &__header {
     }
-     &__round {
+    &__round {
     }
 }
 
 .game-content-header {
-        display: flex;
-flex-flow: row wrap;
+    display: flex;
+    flex-flow: row wrap;
     &__title {
         flex: 1 1 100%;
     }
@@ -452,7 +493,6 @@ flex-flow: row wrap;
     }
     &__summary {
         flex: 1 1 100%;
-
     }
 }
 
@@ -540,7 +580,6 @@ flex-flow: row wrap;
 .car {
     flex: 1 1 50%;
     padding: 0.5rem 1rem;
-
 }
 .length {
     // display: flex;
@@ -561,6 +600,5 @@ flex-flow: row wrap;
     }
     &__icon {
         padding-right: 0.25rem;
-
     }
 }
