@@ -151,11 +151,20 @@ export default function TrainRoundsComponent() {
                   {score}</Btn>)}
             </div>
             <div className="gameplay_routes__tools">
-              {routeMainScores && routeMainScores.map((score) =>
-                <Btn color="route-main" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
-              {routeLocalScores && routeLocalScores.map((score) =>
-                <Btn color="route-local" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+              <div className="gameplay_routes__tools-item">
+                {routeMainScores && routeMainScores.map((score) =>
+                  <Btn color="route-main" customType="narrow"
+                    key={score}
+                    onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}
+                  </Btn>)}
+              </div>
+              <div className="gameplay_routes__tools-item">
+
+                {routeLocalScores && routeLocalScores.map((score) =>
+                  <Btn className="gameplay_routes__tools-item" color="route-local" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+              </div>
             </div>
+
           </div>}
 
           {clientRound._id === 'length' && <div className='round__gameplay gameplay_length' >

@@ -579,19 +579,23 @@
         &__visual {
             display: flex;
             flex-flow: row wrap;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             justify-content: center;
             button {
-                margin: 0 2px;
+                margin: 2px;
             }
         }
         &__tools {
-            display: flex;
-            flex-flow: row wrap;
             margin-bottom: 0.5rem;
-            justify-content: space-between;
-            button {
-                margin: 2px;
+
+            &-item {
+                display: flex;
+                flex-flow: row wrap;
+                // margin-top: 0.5rem;
+                justify-content: start;
+                button {
+                    margin: 2px;
+                }
             }
         }
     }
@@ -660,37 +664,6 @@
                     text-align: center;
                 }
             }
-        }
-    }
-
-    &__visualization {
-        margin-bottom: 1rem;
-        display: flex;
-        flex-flow: wrap row;
-        align-items: center;
-        min-height: 2.5rem;
-        &_routes {
-            button {
-                margin: 2px;
-            }
-        }
-        &_routes,
-        &_cars {
-            justify-content: center;
-        }
-        &_length,
-        &_stations {
-            justify-content: center;
-        }
-    }
-    &__tools {
-        display: flex;
-        flex-flow: wrap row;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 2.5rem;
-        button {
-            margin: 2px;
         }
     }
 }
