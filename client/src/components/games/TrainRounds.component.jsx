@@ -18,6 +18,7 @@ import Btn from '../../ui/button/Btn';
 import { config } from '../../app-config';
 const { routeMainScores } = config.games.train;
 const { routeLocalScores } = config.games.train;
+const { routeLocalScoresTop } = config.games.train;
 const { cars } = config.games.train;
 // const round = 'routes';
 
@@ -159,9 +160,12 @@ export default function TrainRoundsComponent() {
                   </Btn>)}
               </div>
               <div className="gameplay_routes__tools-item">
-
                 {routeLocalScores && routeLocalScores.map((score) =>
-                  <Btn className="gameplay_routes__tools-item" color="route-local" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+                  <Btn className="gameplay_routes__tools-item" color="route-local"  key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+              </div>
+              <div className="gameplay_routes__tools-item">
+                {routeLocalScoresTop && routeLocalScores.map((score) =>
+                  <Btn className="gameplay_routes__tools-item" color="route-local" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
               </div>
             </div>
 

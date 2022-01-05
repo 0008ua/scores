@@ -579,7 +579,7 @@
         &__visual {
             display: flex;
             flex-flow: row wrap;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             justify-content: center;
             button {
                 margin: 2px;
@@ -592,9 +592,9 @@
                 display: flex;
                 flex-flow: row wrap;
                 // margin-top: 0.5rem;
-                justify-content: start;
+                justify-content: space-between;
                 button {
-                    margin: 2px;
+                    margin:.5rem;
                 }
             }
         }
