@@ -17,9 +17,9 @@ export default function RoundsMenuComponent({ gameType }) {
     , [round, gameType]);
   return (
     <>
-      <div className="game__rounds-menu-top"
+      {/* <div className="game__rounds-menu-top"
 
-      ></div>
+      ></div> */}
 
       {activeRound && gameType && config.games[gameType].rounds && config.games[gameType].rounds.map(
         (item, idx) =>

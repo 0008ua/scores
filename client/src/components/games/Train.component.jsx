@@ -67,10 +67,7 @@ export default function TrainComponent() {
 
   const calcTotalScores = (player_id) => {
     let sum = 0;
-    console.log('clientRounds', clientRounds)
     clientRounds.forEach((round) => {
-      console.log('round', round)
-
       round.players.forEach((player) => {
         if (player._id === player_id) {
           sum += player.scoresLine.reduce((prev, cur) => prev + cur, 0)
@@ -81,17 +78,39 @@ export default function TrainComponent() {
   }
   const getPlayerColor = (player_id) => clientPlayers.find((player) => player._id === player_id).color;
   const getPlayerName = (player_id) => clientPlayers.find((player) => player._id === player_id).name;
+  const getWinners = () => {
+    let winners = [];
+    let maxScore = 0;
+    clientPlayers.forEach((player) => {
+      const score = calcTotalScores(player._id);
+      if (score === maxScore) {
+        winners.push(player);
+      } else if (score > maxScore) {
+        maxScore = score;
+        winners = [player];
+      }
+    })
+    return winners;
+  }
+  const sortClientPlayersByScores = () => {
+    console.log('rtwr')
+    return [...clientPlayers].sort((a, b) => {
+      console.log('calcTotalScores(a._id)', calcTotalScores(a._id))
+      console.log('calcTotalScores(b._id)', calcTotalScores(b._id))
+      return calcTotalScores(b._id) - calcTotalScores(a._id);
+    });
+  }
 
   const endGameHandler = (finish) => {
     const clientRoundsWithTotal = clientRounds.map((round) => {
-    const players = round.players.map((player) => {
-      return {
-        _id: player._id,
-        score: player.scoresLine.reduce((prev, cur) => prev + cur, 0)
-      }
-    });
-    return { ...round, players }
-  })
+      const players = round.players.map((player) => {
+        return {
+          _id: player._id,
+          score: player.scoresLine.reduce((prev, cur) => prev + cur, 0)
+        }
+      });
+      return { ...round, players }
+    })
     const game = {
       type: clientGames[0].type,
       rounds: clientRoundsWithTotal,
@@ -110,14 +129,53 @@ export default function TrainComponent() {
         <Routes>
           <Route path=":round"
             element={<RoundsMenuComponent gameType="train" />}
-            exact="true"
-          >
+            exact="true">
           </Route>
         </Routes>
       </div>
 
-      <div className="game__content container">
-        <div className="game-content__header game-content-header">
+      <div className="game__content game-content">
+        <div className="game-content__header">
+          <h1 className="game-content__header-text heading-text">Train</h1>
+          <div className="game-content__header-buttons">
+            {clientGames && clientGames.length > 0 &&
+              <Btn
+                color="danger" type="button" onClick={() => endGameHandler(false)}>
+                Cancel game
+              </Btn>}
+            {clientGames && clientGames.length > 0 &&
+              <Btn
+                color="danger" type="button" onClick={() => endGameHandler(true)}>
+                Finish game
+              </Btn>}
+          </div>
+        </div>
+        <div className="game-content__summary game-summary">
+          {clientPlayers && sortClientPlayersByScores().map((player) => {
+            return <div className="game-summary__item"
+              style={{
+                borderLeft: `4px solid ${getPlayerColor((player._id))}`,
+              }}
+              key={uuidv4()} >
+              <span className="game-summary__item-name">
+                {getPlayerName(player._id)}
+              </span>
+              <span className="game-summary__item-score"
+                style={{
+                  borderRight: `3px solid ${getPlayerColor((player._id))}`,
+
+                }}
+
+              ><strong>{calcTotalScores(player._id)}</strong></span>
+            </div>
+          })}
+        </div>
+        <div className="game-content__rounds">
+          <Routes>
+            {routes.map((route) => <Route {...route} key={uuidv4()} />)}
+          </Routes>
+        </div>
+        {/* <div className="game-content__header game-content-header">
           <h1 className="game-content-header__title heading-text">Train</h1>
           <div className="game-content-header__btn">
             {clientGames && clientGames.length > 0 &&
@@ -133,21 +191,14 @@ export default function TrainComponent() {
           </div>
           <div className="game-content-header__summary">
 
-            {clientPlayers && clientPlayers.map((player) => {
-              return <div style={{ color: getPlayerColor((player._id))}}>
-                {getPlayerName(player._id)} {calcTotalScores(player._id)}
-              </div>
-              })}
+
           </div>
-        </div>
-        {/* <div className="game-content__summary">
-          summary
         </div> */}
-        <div className="game-content__round round">
+        {/* <div className="game-content__round round">
           <Routes>
             {routes.map((route) => <Route {...route} key={uuidv4()} />)}
           </Routes>
-        </div>
+        </div> */}
       </div>
     </div >
   )

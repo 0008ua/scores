@@ -1,5 +1,5 @@
 import { ofType } from 'redux-observable';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import {
   authError, storeToken, storeTokenSuccess, storeUserFromToken, storeUserFromTokenSuccess,

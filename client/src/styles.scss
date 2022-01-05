@@ -149,7 +149,7 @@
 }
 
 .main {
-    background-color: $background;
+    background-color: $background-light;
     @include gt-md {
         min-height: calc(100vh - #{$header-height-gt-md});
     }
@@ -361,7 +361,6 @@
 }
 
 .game {
-    // background-color: $background;
     @include gt-md {
         min-height: calc(100vh - #{$header-height-gt-md});
     }
@@ -378,50 +377,28 @@
     flex-flow: row nowrap;
     &__rounds-menu {
         position: fixed;
-        top: 0;
         left: 0;
         width: 3rem;
-        // flex: 0 0 3rem;
         @include gt-md {
-            height: calc(100vh - #{$header-height-gt-md} + #{$header-height-gt-md});
+            top: #{$header-height-gt-md} + 1rem;
+            height: calc(100vh - #{$header-height-gt-md} - #{$header-height-gt-md} -1rem);
         }
         @include md {
-            height: calc(100vh - #{$header-height-md} + #{$header-height-md});
+            top: calc(#{$header-height-md} + 1rem);
+            height: calc(100vh - #{$header-height-md} - #{$header-height-md} - 1rem);
         }
         @include sm {
-            height: calc(100vh - #{$header-height-sm} + #{$header-height-sm});
+            top: calc(#{$header-height-sm} + 1rem);
+            height: calc(100vh - #{$header-height-sm} - #{$header-height-sm} - 1rem);
         }
         @include xs {
-            height: calc(100vh - #{$header-height-xs} + #{$header-height-xs});
-        }
-    }
-    &__rounds-menu-top {
-        // position: fixed;
-        // top: 0;
-        // left: 0;
-        background-color: $primary;
-        width: 3rem;
-        background-color: $background-dark;
-        border-left: 0.5rem solid $background-dark;
-        pointer-events: none;
-        cursor: default;
-        @include xs {
-            height: $header-height-xs;
-        }
-        @include sm {
-            height: $header-height-sm;
-        }
-        @include md {
-            height: $header-height-md;
-        }
-        @include gt-md {
-            height: $header-height-gt-md;
+            top: calc(#{$header-height-xs} + 1rem);
+            height: calc(100vh - #{$header-height-xs} - #{$header-height-xs} - 1rem);
         }
     }
     &__content {
         margin-left: 3rem;
         width: 100%;
-        // flex: 1 1 auto;
     }
 }
 
@@ -430,11 +407,17 @@
     flex-flow: column nowrap;
     justify-content: space-between;
     &__item {
+        &:first-child {
+            border-radius: 0 1rem 0 0;
+        }
+        &:last-child {
+            border-radius: 0 0 1rem 0;
+        }
         flex: 1 1 auto;
         display: flex;
         @extend .flex-center;
-        color: $text;
-        background-color: $primary-light;
+        color: text($primary-light);
+        background-color: $secondary;
         border-left: 0.5rem solid $danger-light;
 
         transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
@@ -444,7 +427,7 @@
             color: text($primary-light);
         }
         &_active {
-            background-color: $primary-light;
+            background-color: $secondary;
             border-left: 0.5rem solid $danger-light;
         }
         &[disabled] {
@@ -466,83 +449,130 @@
 }
 
 .game-content {
-    &__header {
-    }
-    &__round {
-    }
-}
-
-.game-content-header {
+    @extend .container;
     display: flex;
-    flex-flow: row wrap;
-    &__title {
-        flex: 1 1 100%;
-    }
-    &__btn {
-        flex: 1 1 100%;
-
+    flex-flow: column nowrap;
+    &__header {
         display: flex;
+        flex-flow: row nowrap;
         align-items: center;
-        justify-content: space-around;
-        margin-bottom: 1rem;
-
-        // button {
-        //     display: inline-block;
-        //     // white-space: nowrap;
-        // }
+        // height: 6rem;
+    }
+    &__header-text {
+    }
+    &__header-buttons {
+        margin-top: 0.5rem;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        button {
+            margin-bottom: 1rem;
+        }
     }
     &__summary {
-        flex: 1 1 100%;
+    }
+    &__rounds {
     }
 }
+
+.game-summary {
+    margin-bottom: 1rem;
+
+    &__item {
+        margin: 0.5rem;
+        display: flex;
+        flex-flow: row nowrap;
+        // &:nth-child(odd) {
+        //     background-color: $background-dark;
+        // }
+    }
+    &__item-name {
+        flex: 1 1 100%;
+        padding-left: 0.5rem;
+    }
+    &__item-score {
+        flex: 1 1 5rem;
+
+    }
+}
+// .game-content-header {
+//     display: flex;
+//     flex-flow: row wrap;
+//     &__title {
+//         flex: 1 1 100%;
+//     }
+//     &__btn {
+//         flex: 1 1 100%;
+
+//         display: flex;
+//         align-items: center;
+//         justify-content: space-around;
+//         margin-bottom: 1rem;
+
+//         // button {
+//         //     display: inline-block;
+//         //     // white-space: nowrap;
+//         // }
+//     }
+//     &__summary {
+//         flex: 1 1 100%;
+//     }
+// }
+
+// .round {
+//     display: flex;
+//     flex-flow: row wrap;
+
+//     &__title {
+//         flex: 1 1 100%;
+//     }
+//     &__body {
+//         flex: 1 1 100%;
+//     }
+//     &__item {
+//         background-color: $background-dark;
+//         padding: 1rem 0.5rem;
+//         margin: 0.5rem 0;
+//         border-radius: 0.5rem;
+//     }
+// }
 
 .round {
     display: flex;
-    flex-flow: row wrap;
-
-    &__title {
-        flex: 1 1 100%;
-    }
-    &__body {
-        flex: 1 1 100%;
-    }
-    &__item {
-        background-color: $background-dark;
-        padding: 1rem 0.5rem;
-        margin: 0.5rem 0;
-        border-radius: 0.5rem;
-    }
-}
-
-.round-item {
-    display: flex;
     flex-flow: wrap column;
+    background-color: $background;
+    // padding: 1rem 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
     &__summary {
         display: flex;
         flex-flow: nowrap row;
         align-items: center;
         justify-content: space-between;
+        background-color: $background-dark;
+        border-radius: 0.5rem 0.5rem 0 0;
         margin-bottom: 1rem;
+        padding: 0.5rem;
     }
     &__summary-name {
         flex: 1 1 100%;
+        padding: 0 1rem;
     }
     &__summary-scores {
         flex: 1 1 auto;
-        display: flex;
-        justify-content: space-between;
-        span {
-            display: inline-block;
-            white-space: nowrap;
-            padding: 0 0.25rem;
-        }
+        white-space: nowrap;
+        padding: 0 1rem;
+        // display: flex;
+        // justify-content: space-between;
+        // span {
+        //     display: inline-block;
+        //     white-space: nowrap;
+        //     padding: 0 0.25rem;
+        // }
     }
     &__gameplay {
+        padding: 0.5rem;
     }
-
-    // button {
-    //     margin: 0 2px;
-    // }
 }
 
 .gameplay {

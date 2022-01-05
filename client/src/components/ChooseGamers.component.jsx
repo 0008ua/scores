@@ -21,7 +21,6 @@ export default function ChooseGamersComponent() {
   const gamerSelectors = storeDataSelectors['gamer'];
   const recentPlayerSelectors = storeDataSelectors['recentPlayer'];
   const clientPlayerSelectors = storeDataSelectors['clientPlayer'];
-  const clientRoundSelectors = storeDataSelectors['clientRound'];
   const gamers = useSelector(gamerSelectors.selectAll);
   const recentPlayers = useSelector(recentPlayerSelectors.selectAll);
   const clientPlayers = useSelector(clientPlayerSelectors.selectAll);
@@ -35,7 +34,6 @@ export default function ChooseGamersComponent() {
   const gamerActions = storeDataActions['gamer'];
   const recentPlayerActions = storeDataActions['recentPlayer'];
   const clientPlayerActions = storeDataActions['clientPlayer'];
-  const gameActions = storeDataActions['game'];
   const clientGameActions = storeDataActions['clientGame'];
   const clientRoundActions = storeDataActions['clientRound'];
 
@@ -72,16 +70,6 @@ export default function ChooseGamersComponent() {
   const removeAllPlayersHandler = (idx) => setPlayersToStore([]);
 
   const startGameHandler = () => {
-    const scores = clientPlayers.map((player) => ({
-      ...player,
-      // scores: function () {
-      //   console.log('this', this)
-      //   return this.scoresLine.reduce((prev, cur) => prev + cur, 0)
-      // },
-      scoresLine: []
-    }));
-
-
     const players = clientPlayers.map((player) => ({
       _id: player._id,
       // scores: function () {
