@@ -6,7 +6,7 @@ import {
   useSelector
 } from 'react-redux';
 import {
-  faMinus, faPlus, faSubway,
+  faMinus, faPlus, faSubway, faSchool, faMapMarkedAlt
   // faCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -131,66 +131,103 @@ export default function TrainRoundsComponent() {
     <>
       {/* <h3 className="round__title">Points for routes</h3> */}
       {/* <div className="round__body"> */}
-        {clientRound && clientRound.players.map((player) =>
-          <div className="round" key={player._id} >
-            <div className="round__summary" style={{
-              borderBottom: '2px solid ' + getPlayerColor(player._id),
-            }}>
-              <h4 className="round__summary-name" >{getPlayerName(player._id)}</h4>
-              <h5 className="round__summary-scores">Scores: {calcScores(player.scoresLine)}
-                {/* <span>Total: {calcTotalScores(player._id)} </span> */}
-              </h5>
+      {clientRound && clientRound.players.map((player) =>
+        <div className="round" key={player._id} >
+          <div className="round__summary" style={{
+            borderBottom: '2px solid ' + getPlayerColor(player._id),
+          }}>
+            <h4 className="round__summary-name" >{getPlayerName(player._id)}</h4>
+            <h5 className="round__summary-scores">Scores: {calcScores(player.scoresLine)}
+              {/* <span>Total: {calcTotalScores(player._id)} </span> */}
+            </h5>
+          </div>
+
+          {clientRound._id === 'routes' && <div className='round__gameplay gameplay_routes' >
+            <div className="gameplay_routes__visual">
+              {player.scoresLine.map((score) =>
+                <Btn customType="narrow" color={score > 19 ? "route-main" : "route-local"}
+                  key={uuidv4()}
+                  onClick={() => scoresLineRemoveHandler({ score, player_id: player._id })}>
+                  {score}</Btn>)}
             </div>
-            {clientRound._id === 'routes' && <div className='round__gameplay gameplay' >
-              <div className="gameplay__visualization gameplay__visualization_routes">
-                {player.scoresLine.map((score) =>
-                  <Btn customType="narrow" color={score > 19 ? "route-main" : "route-local"}
-                    key={uuidv4()}
-                    onClick={() => scoresLineRemoveHandler({ score, player_id: player._id })}>
-                    {score}</Btn>)}
-              </div>
-              <div className="gameplay__tools">
-                {routeMainScores && routeMainScores.map((score) =>
-                  <Btn color="route-main" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
-                {routeLocalScores && routeLocalScores.map((score) =>
-                  <Btn color="route-local" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
-              </div>
-            </div>}
+            <div className="gameplay_routes__tools">
+              {routeMainScores && routeMainScores.map((score) =>
+                <Btn color="route-main" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+              {routeLocalScores && routeLocalScores.map((score) =>
+                <Btn color="route-local" customType="narrow" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
+            </div>
+          </div>}
 
-            {clientRound._id === 'length' && <div className='round-item__gameplay gameplay' >
-              <div className="gameplay__visualization gameplay__visualization_length"
-                onClick={() => scoresLineUpdateHandler({ player_id: player._id, score: 10 })}>
-                {player.scoresLine.length
-                  ?
-                  <Btn color='primary' className='length length_longest'>
-                    <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faSubway} />
-                    <span className="dbl-icon-btn__text">Longest route</span>
-                    <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faSubway} />
-                  </Btn>
-                  :
-                  <Btn className='length length_short'>Mark as longest route</Btn>
-                }
+          {clientRound._id === 'length' && <div className='round__gameplay gameplay_length' >
+            <div className="gameplay_length__visual">
+              <div className="gameplay_stations__visual-item">
               </div>
-            </div>}
+            </div>
+            <div className="gameplay_length__visual"
+              onClick={() => scoresLineUpdateHandler({ player_id: player._id, score: 10 })}>
+              {player.scoresLine.length
+                ?
+                <Btn color='primary' className='gameplay_stations__visual-item gameplay_stations__visual-item_longest'>
+                  <FontAwesomeIcon className="icon-btn__icon" icon={faMapMarkedAlt} />
+                  <span className="icon-btn__text">Longest route</span>
+                </Btn>
+                :
+                <Btn className='gameplay_stations__visual-item gameplay_stations__visual-item_regular'>
+                  Mark as longest route</Btn>
+              }
+            </div>
+          </div>}
 
-            {clientRound._id === 'stations' && <div className='round-item__gameplay gameplay' >
-              <div className="gameplay__visualization gameplay__visualization_stations" >
+          {clientRound._id === 'stations' && <div className='round__gameplay gameplay_stations' >
+            <div className="gameplay_stations__visual">
+              <div className="gameplay_stations__visual-item">
                 <Btn color='primary' customType="sticky-left" disabled={player.scoresLine.length > 3}
                   onClick={() => scoresLineAddHandler({ score: -4, player_id: player._id })}>
-                  <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faPlus} />
+                  <FontAwesomeIcon icon={faPlus} />
                 </Btn>
                 <Btn color='primary' customType="sticky">
-                  <span className="dbl-icon-btn__text">Used: {player.scoresLine.length - 1}</span>
-                  <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faSubway} />
+                  <FontAwesomeIcon className="icon-btn__icon" icon={faSchool} />
+                  <span className="icon-btn__text">{player.scoresLine.length - 1}</span>
                 </Btn>
                 <Btn color='primary' customType="sticky-right" disabled={player.scoresLine.length < 2}
                   onClick={() => scoresLineRemoveHandler({ score: -4, player_id: player._id })}>
-                  <FontAwesomeIcon className="gameplay__car-btn_icon" icon={faMinus} />
+                  <FontAwesomeIcon icon={faMinus} />
                 </Btn>
               </div>
-            </div>}
 
-            {clientRound._id === 'cars' && <div className='round-item__gameplay gameplay' >
+            </div>
+          </div>}
+
+          {clientRound._id === 'cars' && <div className='round__gameplay gameplay_cars' >
+            <div className="gameplay_cars__visual">
+              {cars.map((car) =>
+                <div className="gameplay_cars__visual-item" key={uuidv4()}>
+                  <div className="gameplay_cars__visual-item_btn">
+                    <Btn color={getPlayerColor(player._id)}
+                      customType={['sticky-left', 'narrow']}
+                      onClick={() => scoresLineAddHandler({ score: car.score, player_id: player._id })}>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </Btn>
+                    <Btn color={getPlayerColor(player._id)}
+                      customType={['sticky', 'narrow']}>
+                      <FontAwesomeIcon className="icon-btn__icon" icon={faSubway} />
+                      <span className="icon-btn__text">{car.qty}</span>
+                    </Btn>
+                    <Btn color={getPlayerColor(player._id)}
+                      customType={['sticky-right', 'narrow']}
+                      onClick={() => scoresLineRemoveHandler({ score: car.score, player_id: player._id })}>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </Btn>
+                  </div>
+                  <span className='gameplay_cars__visual-item_score'>
+                    <strong>{calcQtyOfArrItems(player._id, car.score)}
+                    </strong></span>
+                </div>
+              )}
+            </div>
+          </div>}
+
+          {/* {clientRound._id === 'cars' && <div className='round-item__gameplay gameplay' >
               <div className="gameplay__visualization gameplay__visualization_cars">
                 {cars.map((car) =>
                   <div className="car" key={uuidv4()}>
@@ -214,9 +251,9 @@ export default function TrainRoundsComponent() {
                   </div>
                 )}
               </div>
-            </div>}
-          </div>
-        )}
+            </div>} */}
+        </div>
+      )}
       {/* </> */}
     </>
   )

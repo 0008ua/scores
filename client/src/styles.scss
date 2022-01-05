@@ -381,19 +381,19 @@
         width: 3rem;
         @include gt-md {
             top: #{$header-height-gt-md} + 1rem;
-            height: calc(100vh - #{$header-height-gt-md} - #{$header-height-gt-md} -1rem);
+            height: calc(100vh - #{$header-height-gt-md} - #{$header-height-gt-md} -3rem);
         }
         @include md {
             top: calc(#{$header-height-md} + 1rem);
-            height: calc(100vh - #{$header-height-md} - #{$header-height-md} - 1rem);
+            height: calc(100vh - #{$header-height-md} - #{$header-height-md} - 3rem);
         }
         @include sm {
             top: calc(#{$header-height-sm} + 1rem);
-            height: calc(100vh - #{$header-height-sm} - #{$header-height-sm} - 1rem);
+            height: calc(100vh - #{$header-height-sm} - #{$header-height-sm} - 3rem);
         }
         @include xs {
             top: calc(#{$header-height-xs} + 1rem);
-            height: calc(100vh - #{$header-height-xs} - #{$header-height-xs} - 1rem);
+            height: calc(100vh - #{$header-height-xs} - #{$header-height-xs} - 3rem);
         }
     }
     &__content {
@@ -492,7 +492,6 @@
     }
     &__item-score {
         flex: 1 1 5rem;
-
     }
 }
 // .game-content-header {
@@ -576,6 +575,94 @@
 }
 
 .gameplay {
+    &_routes {
+        &__visual {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 0.5rem;
+            justify-content: center;
+            button {
+                margin: 0 2px;
+            }
+        }
+        &__tools {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 0.5rem;
+            justify-content: space-between;
+            button {
+                margin: 2px;
+            }
+        }
+    }
+    &_stations {
+        &__visual {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 0.5rem;
+            justify-content: center;
+            &-item {
+                flex: 0 1 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                button {
+                    flex: 1 1 33.3%;
+                }
+            }
+        }
+    }
+    &_length {
+        &__visual {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 0.5rem;
+            justify-content: center;
+            &-item {
+                flex: 0 1 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                &_longest {
+                    flex: 0 1 80%;
+                }
+                &_regular {
+                    flex: 0 1 30%;
+                }
+            }
+        }
+    }
+    &_cars {
+        &__visual {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 0.5rem;
+            justify-content: space-between;
+            &-item {
+                flex: 1 1 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                &_btn {
+                    flex: 1 1 100%;
+                    display: flex;
+                    padding: 0 0.5rem;
+                    button {
+                        flex: 1 1 33.3%;
+                    }
+                }
+                &_score {
+                    flex: 1 1 3rem;
+                    padding: 0 0.5rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
     &__visualization {
         margin-bottom: 1rem;
         display: flex;
@@ -607,24 +694,13 @@
         }
     }
 }
-.car {
-    flex: 1 1 50%;
-    padding: 0.5rem 1rem;
-}
-.length {
-    // display: flex;
-    // justify-content: center;
-    // white-space: nowrap;
-    &_longest {
-        flex: 0 1 80%;
-        // background-color: $primary;
-    }
-    &_short {
-        flex: 0 1 30%;
-    }
-}
 
-.dbl-icon-btn {
+// .dbl-icon-btn {
+//     &__text {
+//         padding: 0 0.25rem;
+//     }
+// }
+.icon-btn {
     &__text {
         padding-left: 0.25rem;
     }

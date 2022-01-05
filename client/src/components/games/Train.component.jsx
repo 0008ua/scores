@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { storeDataActions, storeDataSelectors } from '../../store/entities/store-data-config';
+import { useState } from 'react';
 
 export default function TrainComponent() {
   const dispatch = useDispatch();
@@ -40,6 +41,8 @@ export default function TrainComponent() {
   const clientGames = useSelector(clientGameSelectors.selectAll).filter((game) => game.type === 'train');
   const clientRounds = useSelector(clientRoundSelectors.selectAll);
 
+  // const [lastGameResults, setLastGameResults] = useState([]);
+
   const routes = [
     {
       path: 'start',
@@ -64,6 +67,12 @@ export default function TrainComponent() {
       exact: 'true'
     },
   ];
+
+  // useEffect(() => {
+  //   if (clientGames.length === 0) {
+  //     setLastGameResults(clientPlayers)
+  //   }
+  // }, [clientGames, clientPlayers])
 
   const calcTotalScores = (player_id) => {
     let sum = 0;
@@ -92,7 +101,7 @@ export default function TrainComponent() {
     })
     return winners;
   }
-  const sortClientPlayersByScores = () => {
+  const sortClientPlayersByScores = (clientPlayers) => {
     console.log('rtwr')
     return [...clientPlayers].sort((a, b) => {
       console.log('calcTotalScores(a._id)', calcTotalScores(a._id))
@@ -150,26 +159,27 @@ export default function TrainComponent() {
               </Btn>}
           </div>
         </div>
-        <div className="game-content__summary game-summary">
-          {clientPlayers && sortClientPlayersByScores().map((player) => {
-            return <div className="game-summary__item"
-              style={{
-                borderLeft: `4px solid ${getPlayerColor((player._id))}`,
-              }}
-              key={uuidv4()} >
-              <span className="game-summary__item-name">
-                {getPlayerName(player._id)}
-              </span>
-              <span className="game-summary__item-score"
+        {clientGames && clientGames.length > 0 &&
+          <div className="game-content__summary game-summary">
+            {clientPlayers && sortClientPlayersByScores(clientPlayers).map((player) => {
+              return <div className="game-summary__item"
                 style={{
-                  borderRight: `3px solid ${getPlayerColor((player._id))}`,
-
+                  borderLeft: `4px solid ${getPlayerColor((player._id))}`,
                 }}
+                key={uuidv4()} >
+                <span className="game-summary__item-name">
+                  {getPlayerName(player._id)}
+                </span>
+                <span className="game-summary__item-score"
+                  style={{
+                    borderRight: `3px solid ${getPlayerColor((player._id))}`,
+                  }}
+                ><strong>{calcTotalScores(player._id)}</strong></span>
+              </div>
+            })}
+          </div>
+        }
 
-              ><strong>{calcTotalScores(player._id)}</strong></span>
-            </div>
-          })}
-        </div>
         <div className="game-content__rounds">
           <Routes>
             {routes.map((route) => <Route {...route} key={uuidv4()} />)}

@@ -95,10 +95,10 @@ export default function HeaderComponent() {
                 {user.name}</span>
             }
 
-            <NavLink className="top-menu__item menu-item" end to="/dashboard" >
+            {/* <NavLink className="top-menu__item menu-item" end to="/dashboard" >
               <FontAwesomeIcon className="menu-item__icon" icon={faGears} />
               <span>Dashboard</span>
-            </NavLink>
+            </NavLink> */}
 
 
             {user && user.role !== 'member' &&
@@ -151,10 +151,10 @@ export default function HeaderComponent() {
                 {user.name}</span>
             }
 
-            <NavLink className="side-menu__item menu-item" end to="/dashboard" >
+            {/* <NavLink className="side-menu__item menu-item" end to="/dashboard" >
               <FontAwesomeIcon className="menu-item__icon" icon={faGears} />
               <span>Dashboard</span>
-            </NavLink>
+            </NavLink> */}
 
 
             {user && user.role !== 'member' &&

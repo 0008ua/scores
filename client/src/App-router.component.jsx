@@ -10,12 +10,12 @@ import DashboardComponent from './components/dashboard/Dashboard.component';
 
 export default function AppRouterComponent() {
   const userSelector = useSelector((state) => state.auth.user);
-  
+
   const privateRoutes = [
     { path: '/', element: < HomeComponent />, exact: 'true' },
     { path: '/games/thousand', element: < ThousandComponent />, exact: 'true' },
     { path: '/games/train/*', element: < TrainComponent />, exact: 'true' },
-    { path: '/dashboard', element: < DashboardComponent />, exact: 'true' },
+    // { path: '/dashboard', element: < DashboardComponent />, exact: 'true' },
     { path: '*', element: <Navigate to="/" />, exact: 'true' },
   ];
 
@@ -23,7 +23,7 @@ export default function AppRouterComponent() {
     { path: '/', element: < HomeComponent />, exact: 'true' },
     { path: '/games/thousand', element: < ThousandComponent />, exact: 'true' },
     { path: '/games/train/*', element: < TrainComponent />, exact: 'true' },
-    { path: '/dashboard', element: < DashboardComponent />, exact: 'true' },
+    // { path: '/dashboard', element: < DashboardComponent />, exact: 'true' },
     { path: '/auth/', element: < SigninComponent />, exact: 'true' },
     { path: '/auth/signup', element: < SignupComponent />, exact: 'true' },
     { path: '*', element: <Navigate to="/" />, exact: 'true' },
