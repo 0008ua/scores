@@ -361,6 +361,8 @@
 }
 
 .game {
+    display: flex;
+    justify-content: center;
     @include gt-md {
         min-height: calc(100vh - #{$header-height-gt-md});
     }
@@ -397,8 +399,11 @@
         }
     }
     &__content {
-        margin-left: 3rem;
+        @include lt-sm {
+            margin-left: 3rem;
+        }
         width: 100%;
+        max-width: 500px;
     }
 }
 
