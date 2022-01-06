@@ -574,6 +574,9 @@
     }
 }
 
+.bblue {
+    background-color: blue;
+}
 .gameplay {
     &_routes {
         &__visual {
@@ -587,14 +590,13 @@
         }
         &__tools {
             margin-bottom: 0.5rem;
-
             &-item {
                 display: flex;
                 flex-flow: row wrap;
                 // margin-top: 0.5rem;
                 justify-content: space-between;
                 button {
-                    margin:.5rem;
+                    margin: 0.5rem 0.25rem;
                 }
             }
         }
@@ -645,18 +647,14 @@
             margin-bottom: 0.5rem;
             justify-content: space-between;
             &-item {
-                flex: 1 1 50%;
+                flex: 1 1 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 0.5rem;
+                margin-bottom: 1rem;
                 &_btn {
-                    flex: 1 1 100%;
-                    display: flex;
-                    padding: 0 0.5rem;
-                    button {
-                        flex: 1 1 33.3%;
-                    }
+                    flex: 1 1 60%;
+                    margin: 0 0.5rem;
                 }
                 &_score {
                     flex: 1 1 3rem;

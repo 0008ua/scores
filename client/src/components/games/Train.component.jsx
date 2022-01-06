@@ -102,10 +102,7 @@ export default function TrainComponent() {
     return winners;
   }
   const sortClientPlayersByScores = (clientPlayers) => {
-    console.log('rtwr')
     return [...clientPlayers].sort((a, b) => {
-      console.log('calcTotalScores(a._id)', calcTotalScores(a._id))
-      console.log('calcTotalScores(b._id)', calcTotalScores(b._id))
       return calcTotalScores(b._id) - calcTotalScores(a._id);
     });
   }

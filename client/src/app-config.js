@@ -12,8 +12,8 @@ export const config = {
       maxPlayersQty: 5,
       playersColors: ['red', 'green', 'blue', 'black', 'yellow'],
       routeMainScores: [20, 21],
-      routeLocalScores: [5, 6, 7, 8, 9],
-      routeLocalScoresTop: [ 10, 11, 12, 13],
+      routeLocalScores: [5, 6, 7, 8, 9, 10],
+      routeLocalScoresTop: [ 11, 12, 13],
       cars: [
         { qty: 1, score: 1 },
         { qty: 2, score: 2 },
