@@ -218,6 +218,10 @@
     }
     &__submit {
         margin-bottom: 1rem;
+        button {
+            width: 100%;
+            margin: 0 0.5rem;
+        }
     }
 
     &__btns {
@@ -413,41 +417,42 @@
     justify-content: space-between;
     &__item {
         &:first-child {
-            border-radius: 0 1rem 0 0;
+            border-radius: 0 0.25rem 0 0;
         }
         &:last-child {
-            border-radius: 0 0 1rem 0;
+            border-radius: 0 0 0.25rem 0;
         }
         flex: 1 1 auto;
         display: flex;
         @extend .flex-center;
         color: text($primary-light);
-        background-color: $secondary;
-        border-left: 0.5rem solid $danger-light;
+        background-color: $primary-light;
+        border-left: 0.5rem solid $primary-dark;
 
         transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
         &:hover {
-            border-left: 0.5rem solid $danger-light;
+            border-left: 0.5rem solid $primary-light;
             // border-top: .25rem solid $danger;
             color: text($primary-light);
         }
         &_active {
-            background-color: $secondary;
-            border-left: 0.5rem solid $danger-light;
+            background-color: $primary;
+            border-left: 0.5rem solid $primary;
         }
         &[disabled] {
-            background-color: $background-dark;
-            border-left: 0.5rem solid $background-dark;
+            background-color: $background;
+            border-left: 0.5rem solid $background;
+            color: $background-dark;
             pointer-events: none;
             cursor: default;
         }
         &_passed {
-            background-color: $secondary-light;
-            border-left: 0.5rem solid $secondary-light;
+            background-color: $background;
+            border-left: 0.5rem solid $background;
         }
         &_upcomming {
-            background-color: $secondary-dark;
-            border-left: 0.5rem solid $secondary-dark;
+            background-color: $background-dark;
+            border-left: 0.5rem solid $background-dark;
             // border-top: .25rem solid $secondary;
         }
     }
@@ -482,7 +487,9 @@
 
 .game-summary {
     margin-bottom: 1rem;
-
+    background-color: $background;
+    border-radius: .25rem;
+    padding: .5rem;
     &__item {
         margin: 0.5rem;
         display: flex;
@@ -547,14 +554,14 @@
     background-color: $background;
     // padding: 1rem 0.5rem;
     margin-bottom: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     &__summary {
         display: flex;
         flex-flow: nowrap row;
         align-items: center;
         justify-content: space-between;
         background-color: $background-dark;
-        border-radius: 0.5rem 0.5rem 0 0;
+        border-radius: 0.25rem 0.25rem 0 0;
         margin-bottom: 1rem;
         padding: 0.5rem;
     }

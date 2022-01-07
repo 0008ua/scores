@@ -146,13 +146,13 @@ export default function TrainComponent() {
           <div className="game-content__header-buttons">
             {clientGames && clientGames.length > 0 &&
               <Btn
-                color="danger" type="button" onClick={() => endGameHandler(false)}>
+                type="button" onClick={() => endGameHandler(false)}>
                 Cancel game
               </Btn>}
             {clientGames && clientGames.length > 0 &&
               <Btn
-                color="danger" type="button" onClick={() => endGameHandler(true)}>
-                Finish game
+                color="secondary" type="button" onClick={() => endGameHandler(true)}>
+                Save game
               </Btn>}
           </div>
         </div>

@@ -227,13 +227,13 @@ export default function ChooseGamersComponent() {
         </div >
       )}
       <div className="row choose-gamers__btns">
-        <Btn color="danger" className="choose-gamers-btns__item"
+        <Btn className="choose-gamers-btns__item"
           type="button" disabled={!filtredGamers.length || clientPlayers.length >= maxPlayersQty}
           onClick={addPlayerHandler}>Add</Btn>
-        <Btn color="secondary" className="choose-gamers-btns__item"
+        <Btn className="choose-gamers-btns__item"
           type="button"
           onClick={createGamerHandler}>Create</Btn>
-        <Btn color="danger" className="choose-gamers-btns__item"
+        <Btn className="choose-gamers-btns__item"
           type="button" disabled={!clientPlayers.length}
           onClick={removeAllPlayersHandler}>Remove All</Btn>
       </div>
