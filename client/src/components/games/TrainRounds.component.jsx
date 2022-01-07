@@ -178,20 +178,16 @@ export default function TrainRoundsComponent() {
           </div>}
 
           {clientRound._id === 'length' && <div className='round__gameplay gameplay_length' >
-            <div className="gameplay_length__visual">
-              <div className="gameplay_stations__visual-item">
-              </div>
-            </div>
             <div className="gameplay_length__visual"
               onClick={() => scoresLineUpdateHandler({ player_id: player._id, score: 10 })}>
               {player.scoresLine.length
                 ?
-                <Btn color='primary' className='gameplay_stations__visual-item gameplay_stations__visual-item_longest'>
+                <Btn color='primary' className='gameplay_length__visual-item gameplay_length__visual-item_longest'>
                   <FontAwesomeIcon className="icon-btn__icon" icon={faMapMarkedAlt} />
                   <span className="icon-btn__text">Longest route</span>
                 </Btn>
                 :
-                <Btn className='gameplay_stations__visual-item gameplay_stations__visual-item_regular'>
+                <Btn className='gameplay_length__visual-item gameplay_length__visual-item_regular'>
                   Mark as longest route</Btn>
               }
             </div>
@@ -216,7 +212,8 @@ export default function TrainRoundsComponent() {
 
               <BtnBlk
                 className="gameplay_stations__visual-item"
-                color='primary'
+                // color='primary'
+
                 plusDisabled={player.scoresLine.length > 3}
                 minusDisabled={player.scoresLine.length < 2}
                 plusHandler={() => scoresLineAddHandler({ score: -4, player_id: player._id })}

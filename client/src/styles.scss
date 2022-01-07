@@ -427,16 +427,16 @@
         @extend .flex-center;
         color: text($primary-light);
         background-color: $primary-light;
-        border-left: 0.5rem solid $primary-dark;
-
-        transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+        border-left: 0.5rem solid $primary;
+        transition: color 0.5s ease-in-out, border-color 0.5s ease-in-out, background-color 0.5s ease-in-out;
         &:hover {
-            border-left: 0.5rem solid $primary-light;
+            border-left: 0.5rem solid $primary;
+            // background-color: $primary-light;
             // border-top: .25rem solid $danger;
             color: text($primary-light);
         }
         &_active {
-            background-color: $primary;
+            background-color: $primary-light;
             border-left: 0.5rem solid $primary;
         }
         &[disabled] {
@@ -488,8 +488,8 @@
 .game-summary {
     margin-bottom: 1rem;
     background-color: $background;
-    border-radius: .25rem;
-    padding: .5rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
     &__item {
         margin: 0.5rem;
         display: flex;
@@ -585,16 +585,13 @@
         padding: 0.5rem;
     }
 }
-
-.bblue {
-    background-color: blue;
-}
 .gameplay {
     &_routes {
         &__visual {
             display: flex;
             flex-flow: row wrap;
             margin-bottom: 1.5rem;
+            min-height: 42px;
             justify-content: center;
             button {
                 margin: 2px;
@@ -620,12 +617,14 @@
             margin-bottom: 0.5rem;
             justify-content: center;
             &-item {
-                flex: 0 1 50%;
+                flex: 0 1 40%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin-bottom: 0.5rem;
-                button {
+                border-bottom: 1px solid $primary;
+                border-radius: .25rem;
+                 button {
                     flex: 1 1 33.3%;
                 }
             }
@@ -644,7 +643,7 @@
                 justify-content: center;
                 margin-bottom: 0.5rem;
                 &_longest {
-                    flex: 0 1 80%;
+                    flex: 0 1 60%;
                 }
                 &_regular {
                     flex: 0 1 30%;
