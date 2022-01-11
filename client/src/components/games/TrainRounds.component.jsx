@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -6,7 +6,7 @@ import {
   useSelector
 } from 'react-redux';
 import {
-  faMinus, faPlus, faSubway, faSchool, faMapMarkedAlt
+  faMinus, faPlus, faSubway, faSchool, faMapMarkedAlt, faStoreAltSlash, faStoreAlt
   // faCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,7 @@ import {
 import Btn from '../../ui/button/Btn';
 import { config } from '../../app-config';
 import BtnBlk from '../../ui/buttonBlock/BtnBlk';
+const { routeScores } = config.games.train;
 const { routeMainScores } = config.games.train;
 const { routeLocalScores } = config.games.train;
 const { routeLocalScoresTop } = config.games.train;
@@ -27,6 +28,7 @@ export default function TrainRoundsComponent() {
   const dispatch = useDispatch();
   const { round } = useParams();
 
+  const [inverse, setInverse] = useState({});
   const clientRoundActions = storeDataActions['clientRound'];
   // const gameSelectors = storeDataSelectors['game'];
   // const clientGameSelectors = storeDataSelectors['clientGame'];
@@ -42,6 +44,12 @@ export default function TrainRoundsComponent() {
   const getPlayerColor = (player_id) => clientPlayers.find((player) => player._id === player_id).color;
   const getPlayerName = (player_id) => clientPlayers.find((player) => player._id === player_id).name;
   // const getCarQtyByScore = (score) => cars.find((car) => car.score === score).qty;
+
+  useEffect(() => {
+    clientPlayers.forEach((clientPlayer) => {
+      setInverse(inverse[clientPlayer._id] = false);
+    })
+  }, []);
 
   const calcQtyOfArrItems = (player_id, item) => {
     let count = 0;
@@ -107,6 +115,10 @@ export default function TrainRoundsComponent() {
     }));
   }
 
+  const inverseRouteScoreHandler = (player_id) => {
+    setInverse({ ...inverse, [player_id]: !inverse[player_id] });
+  }
+
   const scoresLineRemoveHandler = (data) => {
     const { score, player_id } = data;
     const changes = clientRound.players
@@ -131,6 +143,7 @@ export default function TrainRoundsComponent() {
 
   return (
     <>
+
       {/* <h3 className="round__title">Points for routes</h3> */}
       {/* <div className="round__body"> */}
       {clientRound && clientRound.players.map((player) =>
@@ -147,32 +160,40 @@ export default function TrainRoundsComponent() {
           {clientRound._id === 'routes' && <div className='round__gameplay gameplay_routes' >
             <div className="gameplay_routes__visual">
               {player.scoresLine.map((score) =>
-                <Btn customType="narrow" color={score > 19 ? "route-main" : "route-local"}
+                <Btn customType="narrow" color={score > 19 || score < -18 ? "route-main" : "route-local"}
                   key={uuidv4()}
                   onClick={() => scoresLineRemoveHandler({ score, player_id: player._id })}>
                   {score}</Btn>)}
             </div>
             <div className="gameplay_routes__tools">
-              {/* <div className="gameplay_routes__tools-item">
-                {routeMainScores && routeMainScores.map((score) =>
-                  <Btn color="route-main" customType="narrow"
-                    key={score}
-                    onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}
+              {/* <div className="gameplay_routes__main-block"> */}
+              <div className="gameplay_routes__tools-item">
+                {routeScores && routeScores.map((score) =>
+                  <Btn  color={score > 19 ? "route-main" : "route-local"} key={score}
+                    onClick={
+                      () => scoresLineAddHandler({
+                        score: inverse[player._id] ? score * -1 : score,
+                        player_id: player._id
+                      })}>
+                    {inverse[player._id] ? score * -1 : score}
                   </Btn>)}
+              </div>
+              <div className="gameplay_routes__inverse-block">
+                <Btn color={inverse[player._id] ? "primary" : "danger"}
+                  onClick={() => inverseRouteScoreHandler(player._id)}>
+                  <FontAwesomeIcon className='icon-btn__icon' icon={inverse[player._id] ? faStoreAlt : faStoreAltSlash} />
+                  <span className='icon-btn__text'>
+                    {inverse[player._id] ? 'Switch to finished routes' : 'Switch to unfinished routes'}</span>
+                </Btn>
+              </div>
+
+              {/* </div>
+              <div className="gameplay_routes__inverse-block">
+                <Btn color={inverse[player._id] ? "primary" : "danger"}
+                  onClick={() => inverseRouteScoreHandler(player._id)}>
+                  <FontAwesomeIcon customType="icon" icon={inverse[player._id] ? faPlus : faMinus} />
+                </Btn>
               </div> */}
-              <div className="gameplay_routes__tools-item">
-                {routeLocalScores && routeLocalScores.map((score) =>
-                  <Btn color="route-local" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
-              </div>
-              <div className="gameplay_routes__tools-item">
-                {routeLocalScoresTop && routeLocalScoresTop.map((score) =>
-                  <Btn  color="route-local" key={score} onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}</Btn>)}
-                {routeMainScores && routeMainScores.map((score) =>
-                  <Btn color="route-main"
-                    key={score}
-                    onClick={() => scoresLineAddHandler({ score, player_id: player._id })}>{score}
-                  </Btn>)}
-              </div>
             </div>
 
           </div>}
